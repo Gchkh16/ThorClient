@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThorClient
+namespace ThorClient.src.Core.Model.Clients
 {
-    public class Class1
+    class ToData
     {
     }
 }
