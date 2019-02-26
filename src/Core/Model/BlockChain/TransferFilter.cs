@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ThorClient.Core.Model.Clients;
 using ThorClient.Core.Model.Clients.Base;
 using ThorClient.Utils;
 

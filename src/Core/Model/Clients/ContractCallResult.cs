@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Org.BouncyCastle.Math;
 using ThorClient.Core.Model.BlockChain;
+using BigInteger = Org.BouncyCastle.Math.BigInteger;
 
 namespace ThorClient.Core.Model.Clients
 {

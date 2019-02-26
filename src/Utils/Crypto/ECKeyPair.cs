@@ -58,14 +58,14 @@ namespace ThorClient.Utils.Crypto
             generator.Init(keygenParams);
             var keypair = generator.GenerateKeyPair();
             var privParams = (ECPrivateKeyParameters)keypair.Private;
-            var k = ECKeyPair.Create(privParams.D);
+            var k = Create(privParams.D);
             return k;
         }
 
         public ECKeyPair(BigInteger privateKey, BigInteger publicKey)
         {
-            this.PrivateKey = privateKey;
-            this.PublicKey = publicKey;
+            PrivateKey = privateKey;
+            PublicKey = publicKey;
         }
 
         public byte[] GetRawPrivateKey() => BytesUtils.ToBytesPadded(PrivateKey, PRIVATE_KEY_SIZE);
@@ -74,7 +74,7 @@ namespace ThorClient.Utils.Crypto
 
         public byte[] GetRawAddress()
         {
-            var hash = CryptoUtils.Keccak256(this.GetRawPublicKey());
+            var hash = CryptoUtils.Keccak256(GetRawPublicKey());
             var address = new byte[20];
             Array.Copy(hash, 12, address, 0, address.Length);
             return address;  // right most 160 bits

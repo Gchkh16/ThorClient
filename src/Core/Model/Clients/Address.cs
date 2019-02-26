@@ -1,9 +1,9 @@
-﻿using System;
-using ThorClient.Core.Model.Exception;
+﻿using ThorClient.Core.Model.Exception;
 using ThorClient.Utils;
+
 // ReSharper disable InconsistentNaming
 
-namespace ThorClient.Core.Model.Clients.Base
+namespace ThorClient.Core.Model.Clients
 {
     /// <summary>
     ///  Address object is wrapped address string or byte array.

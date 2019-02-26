@@ -1,14 +1,13 @@
 ﻿using System;
 using ThorClient.Core.Model.Clients.Base;
-using ThorClient.src.Core.Model.Clients;
 
 namespace ThorClient.Core.Model.Clients
 {
     [Serializable]
     public class ToClause
     {
-        public Address To { get; set; } //to address
-        public Amount Value { get; set; } //hex form of coin to transferred
+        public Address To { get; set; } 
+        public Amount Value { get; set; }
         public ToData Data { get; set; }
 
         public ToClause()
@@ -16,7 +15,7 @@ namespace ThorClient.Core.Model.Clients
 
         }
 
-        public ToClause(string to, string value, string data)
+        public ToClause(Address to, Amount value, ToData data)
         {
             To = to;
             Value = value;

@@ -105,5 +105,15 @@ namespace ThorClient.Utils
         {
             throw new NotImplementedException();
         }
+
+        public static byte[] LongToBytes(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static byte[] TrimLeadingZeroes(byte[] message)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

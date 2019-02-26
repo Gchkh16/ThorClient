@@ -31,8 +31,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.4.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>packages\BouncyCastle.1.8.4\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaTypeProvider, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\JavaTypeProvider.1.0.0\lib\net40\JavaTypeProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,12 +81,20 @@
     <Compile Include="src\Core\Model\BlockChain\TxMeta.cs" />
     <Compile Include="src\Core\Model\BlockChain\WSRequest.cs" />
     <Compile Include="src\Core\Model\Clients\Amount.cs" />
-    <Compile Include="src\Core\Model\Clients\Base\Address.cs" />
+    <Compile Include="src\Core\Model\Clients\Base\AbiDefinition.cs" />
+    <Compile Include="src\Core\Model\Clients\Base\AbstractContract.cs" />
+    <Compile Include="src\Core\Model\Clients\Address.cs" />
+    <Compile Include="src\Core\Model\Clients\Base\AbstractToken.cs" />
     <Compile Include="src\Core\Model\Clients\BlockRef.cs" />
     <Compile Include="src\Core\Model\Clients\BlockSubscribingRequest.cs" />
     <Compile Include="src\Core\Model\Clients\BlockSubscribingResponse.cs" />
     <Compile Include="src\Core\Model\Clients\ContractCall.cs" />
     <Compile Include="src\Core\Model\Clients\ContractCallResult.cs" />
+    <Compile Include="src\Core\Model\Clients\ERC20Contract.cs" />
+    <Compile Include="src\Core\Model\Clients\ERC20Token.cs" />
+    <Compile Include="src\Core\Model\Clients\RawTransaction.cs" />
+    <Compile Include="src\Core\Model\Clients\Revision.cs" />
+    <Compile Include="src\Core\Model\Clients\StorageKey.cs" />
     <Compile Include="src\Core\Model\Clients\ToClause.cs" />
     <Compile Include="src\Core\Model\Clients\ToData.cs" />
     <Compile Include="src\Core\Model\Exception\ClientArgumentException.cs" />
@@ -84,18 +102,31 @@
     <Compile Include="src\Core\Model\Exception\HttpException.cs" />
     <Compile Include="src\Core\Model\Exception\InvalidArgumentException.cs" />
     <Compile Include="src\Core\Model\Exception\ThorException.cs" />
+    <Compile Include="src\Utils\BeanRefUtils.cs" />
     <Compile Include="src\Utils\BlockchainUtils.cs" />
     <Compile Include="src\Utils\BytesUtils.cs" />
+    <Compile Include="src\Utils\ContractParamEncoder.cs" />
     <Compile Include="src\Utils\CryptoUtils.cs" />
     <Compile Include="src\Utils\Crypto\ECDSASign.cs" />
     <Compile Include="src\Utils\Crypto\ECDSASignature.cs" />
     <Compile Include="src\Utils\Crypto\ECKeyPair.cs" />
     <Compile Include="src\Utils\Prefix.cs" />
+    <Compile Include="src\Utils\RawTransactionBuilder.cs" />
+    <Compile Include="src\Utils\RawTransactionFactory.cs" />
+    <Compile Include="src\Utils\RLPUtils.cs" />
+    <Compile Include="src\Utils\Rlp\RlpDecoder.cs" />
+    <Compile Include="src\Utils\Rlp\RlpEncoder.cs" />
+    <Compile Include="src\Utils\Rlp\RlpList.cs" />
+    <Compile Include="src\Utils\Rlp\RlpString.cs" />
+    <Compile Include="src\Utils\Rlp\RlpType.cs" />
     <Compile Include="src\Utils\StringUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\Clinets\" />
     <Folder Include="src\Console\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

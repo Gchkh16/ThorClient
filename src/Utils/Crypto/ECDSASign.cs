@@ -18,7 +18,7 @@ namespace ThorClient.Utils.Crypto
         /// <param name="keyPair"></param>
         /// <param name="needToHash">set true if the message to be hashed before signing. If it is true, hashed first,then sign. If it is false, signed directly.</param>
         /// <returns></returns>
-        public static ECDSASign.SignatureData SignMessage(byte[] message, ECKeyPair keyPair, bool needToHash)
+        public static SignatureData SignMessage(byte[] message, ECKeyPair keyPair, bool needToHash)
         {
 
             var publicKey = keyPair.PublicKey;
@@ -52,7 +52,7 @@ namespace ThorClient.Utils.Crypto
             var r = BytesUtils.ToBytesPadded(sig.R, 32);
             var s = BytesUtils.ToBytesPadded(sig.S, 32);
 
-            return new ECDSASign.SignatureData(v, r, s);
+            return new SignatureData(v, r, s);
 
         }
 
