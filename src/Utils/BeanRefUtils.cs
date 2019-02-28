@@ -11,7 +11,7 @@ namespace ThorClient.Utils
         public static Dictionary<string, object> GetFieldValueMap(object bean)
         {
             var cls = bean.GetType();
-            Dictionary<string, object> valueMap = new Dictionary<string, object>();
+            var valueMap = new Dictionary<string, object>();
             var methods = cls.GetMethods();
             var properties = cls.GetProperties();
             foreach (var prop in properties)
@@ -42,7 +42,7 @@ namespace ThorClient.Utils
                 try
                 {
                     string fieldKeyName = field.Name;
-                    object value = valMap[fieldKeyName];
+                    var value = valMap[fieldKeyName];
                     if (null != value && !"".Equals(value))
                     {
                         var fieldType = field.PropertyType;
@@ -76,7 +76,7 @@ namespace ThorClient.Utils
                             field.SetValue(bean, temp);
                         }
                         else if (fieldType == typeof(byte)) {
-                            byte[] temp = (byte[])value;
+                            var temp = (byte[])value;
                             field.SetValue(bean, temp);
                         } else if (fieldType == typeof(byte))
                         {

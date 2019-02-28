@@ -39,7 +39,7 @@ namespace ThorClient.Utils
         public RawTransaction Build()
         {
 
-            RawTransaction rawTransaction = new RawTransaction();
+            var rawTransaction = new RawTransaction();
             BeanRefUtils.SetFieldValue(rawTransaction, _refValue);
             rawTransaction.Clauses = _clauses;
             return rawTransaction;

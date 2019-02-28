@@ -15,7 +15,7 @@ namespace ThorClient.Utils
             || toClauses == null) {
             throw new ArgumentException("The arguments of create raw transaction is illegal.");
             }
-            RawTransactionBuilder builder = new RawTransactionBuilder();
+            var builder = new RawTransactionBuilder();
 
             // chainTag
             builder.Update(chainTag, "chainTag");
@@ -52,7 +52,7 @@ namespace ThorClient.Utils
             }
                 // update the clause
             builder.Update(rawClauses);
-            RawTransaction rawTxn = builder.Build();
+            var rawTxn = builder.Build();
                 return rawTxn;
         }
     }
