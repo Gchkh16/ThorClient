@@ -3,10 +3,11 @@ using Org.BouncyCastle.Crypto.Digests;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Security;
 using ThorClient.Utils.Crypto;
+// ReSharper disable InconsistentNaming
 
 namespace ThorClient.Utils
 {
-    public class CryptoUtils
+    public static class CryptoUtils
     {
 
         public static byte[] Keccak256(byte[] message) => Keccak256(message, 0, message.Length);
@@ -34,7 +35,15 @@ namespace ThorClient.Utils
             return randomBytes;
         }
 
-        public static ECKeyPair recoverPublicKey(byte[] message, byte[] sig)
+        public static byte[] GenerateTxNonce()
+        {
+            SecureRandom random = new SecureRandom();
+            byte[] bytes = new byte[8];
+            random.NextBytes(bytes);
+            return bytes;
+        }
+
+        public static ECKeyPair RecoverPublicKey(byte[] message, byte[] sig)
         {
             if (message == null || message.Length != 32)
             {
@@ -56,7 +65,35 @@ namespace ThorClient.Utils
 
         public static byte[] Blake2b(byte[] message)
         {
-            throw new NotImplementedException();
+            /**
+            * Thor public blockchain is using 256 bits digest
+            */
+            var blake2b = new Blake2bDigest(256);
+            blake2b.BlockUpdate(message, 0, message.Length);
+            byte[] digest = new byte[32];
+            int size = blake2b.DoFinal(digest, 0);
+            if (size > 0)
+            {
+                return digest;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static byte[] Sha256(byte[] bytes)
+        {
+            return Sha256(bytes, 0, bytes.Length);
+        }
+
+        private static byte[] Sha256(byte[] bytes, int offset, int size)
+        {
+            var sha256Digest = new Sha256Digest();
+            sha256Digest.BlockUpdate(bytes, offset, size);
+            byte[] sha256 = new byte[32];
+            sha256Digest.DoFinal(sha256, 0);
+            return sha256;
         }
     }
 }
