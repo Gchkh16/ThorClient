@@ -17,7 +17,8 @@ namespace ThorClient.Utils
 
         public static T PostJson<T>(string url, Dictionary<string, string> headers, object json)
         {
-            var resp = url.WithHeaders(headers).PostJsonAsync(json).Result;
+            var resp = url.WithHeaders(headers).WithHeader("accept", "application/json")
+                .WithHeader("Content-Type", "application/json").PostJsonAsync(json).Result;
             resp.EnsureSuccessStatusCode();
             return JsonConvert.DeserializeObject<T>(resp.Content.ReadAsStringAsync().Result);
         }
