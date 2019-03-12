@@ -17,5 +17,12 @@ namespace ThorClient.Core.Model.Clients
         public BigInteger GasUsed { get; set; }
         public bool Reverted { get; set; }
         public string VmError { get; set; }
+
+        public Amount GetBalance(ERC20Token token)
+        {
+            var balance = Amount.CreateFromToken(token);
+            balance.SetHexAmount(Data);
+            return balance;
+        }
     }
 }

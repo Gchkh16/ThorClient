@@ -26,7 +26,7 @@ namespace ThorClient.Core.Model.Clients
                 return BEST;
             }
 
-            if (!BlockChainUtils.IsId(blockId))
+            if (!BlockchainUtils.IsId(blockId))
             {
                 throw ClientArgumentException.Exception("create revision from blockId invalid");
             }

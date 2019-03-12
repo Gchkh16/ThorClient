@@ -35,7 +35,7 @@ namespace ThorClient.Core.Model.Clients
             {
                 throw ClientArgumentException.Exception("Address.fromHexString hexAddress is blank string");
             }
-            if (!BlockChainUtils.IsAddress(hexAddress))
+            if (!BlockchainUtils.IsAddress(hexAddress))
             {
                 throw ClientArgumentException.Exception("Address.fromHexString hexAddress is not hex format ");
             }

@@ -184,8 +184,36 @@ namespace ThorClient.Core.Model.Clients
 
         public ERC20Contract() : base(ERC20ABIString)
         {
-            throw new NotImplementedException();
+           
         }
 
+        public static ToClause BuildTranferToClause(ERC20Token token, Address toAddress, Amount amount)
+        {
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token),"token is null");
+            }
+            if (toAddress == null)
+            {
+                throw new ArgumentNullException(nameof(token),"toAddress is null");
+            }
+            if (amount == null)
+            {
+                throw new ArgumentNullException(nameof(amount),"amount is null");
+            }
+
+            var abiDefinition = DefaultERC20Contract.FindAbiDefinition("transfer");
+            if (abiDefinition == null)
+            {
+                throw new System.Exception("can not find transfer abi method");
+            }
+            var data = BuildData(abiDefinition, toAddress.ToHexString(null), amount.ToBigInteger());
+
+            var toData = new ToData();
+            toData.SetData(data);
+            return new ToClause(token.ContractAddress, Amount.ZERO, toData);
+        }
+
+        public static ERC20Contract DefaultERC20Contract { get; } = new ERC20Contract();
     }
 }

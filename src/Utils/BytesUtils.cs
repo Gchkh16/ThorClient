@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Org.BouncyCastle.Math;
+using ThorClient.Numerics;
 
 namespace ThorClient.Utils
 {
@@ -114,6 +115,19 @@ namespace ThorClient.Utils
         public static byte[] TrimLeadingZeroes(byte[] message)
         {
             throw new NotImplementedException();
+        }
+
+        
+        public static BigDecimal BigIntToBigDecimal(BigInteger integer, int precision, int scale) //TODO Apply scale
+        {
+            if (integer == null || precision < 0 || scale < 0)
+            {
+                return null;
+            }
+            var dec = new BigDecimal(integer);
+            var precisionDecimal = BigDecimal.Pow(10, precision);
+            var value = BigDecimal.Divide(dec, precisionDecimal);
+            return value;
         }
     }
 }

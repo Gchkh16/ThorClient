@@ -190,14 +190,7 @@ namespace ThorClient.Utils
                     break;
                 case DependsOn:
                     rlpString = (RlpString)listValues[index];
-                    if (rlpString.GetBytes().Length == 0)
-                    {
-                        rawTransaction.DependsOn = null;
-                    }
-                    else
-                    {
-                        rawTransaction.DependsOn = rlpString.GetBytes();
-                    }
+                    rawTransaction.DependsOn = rlpString.GetBytes().Length == 0 ? null : rlpString.GetBytes();
 
                     break;
                 case Nonce:

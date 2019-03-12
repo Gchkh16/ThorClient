@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
+using Org.BouncyCastle.Math;
+using ThorClient.Numerics;
 
 namespace ThorClient.Utils
 {
     /// <summary>
     /// BlockChain utility, include address check, blockId check, amount calculate.
     /// </summary>
-    public static class BlockChainUtils
+    public static class BlockchainUtils
     {
         /// <summary>
         /// Check if block revision is valid
@@ -129,6 +131,32 @@ namespace ThorClient.Utils
             {
                 return value - '0';
             }
+        }
+
+        public static BigDecimal Amount(string hexString, int precision, int scale)
+        {
+            byte[] balBytes = BytesUtils.ToByteArray(hexString);
+            if (balBytes == null)
+            {
+                return null;
+            }
+            BigInteger balInteger = BytesUtils.BytesToBigInt(balBytes);
+            return BytesUtils.BigIntToBigDecimal(balInteger, precision, scale);
+        }
+
+        public static byte[] ByteArrayAmount(BigDecimal value, int precision)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value),"amount is null");
+            }
+            if (precision < 0)
+            {
+                throw new ArgumentNullException(nameof(precision),"precision is invalid");
+            }
+            BigDecimal bigDecimal = value * BigDecimal.Pow(10, precision);
+            System.Numerics.BigInteger bigInt = bigDecimal.GetWholePart();
+            return BytesUtils.TrimLeadingZeroes(bigInt.ToByteArray());
         }
     }
 }
