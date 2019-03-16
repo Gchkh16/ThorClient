@@ -22,7 +22,7 @@ namespace ThorClient.Core.Model.Clients
             var indexBytes = new byte[32];
             var valueBytes = value;
 
-            var originIndexBytes = BytesUtils.LongToBytes(index);
+            var originIndexBytes = ByteUtils.LongToBytes(index);
             Array.Copy(originIndexBytes, 0, indexBytes, indexBytes.Length - originIndexBytes.Length, originIndexBytes.Length);
 
             if (value.Length < 32)
@@ -44,7 +44,7 @@ namespace ThorClient.Core.Model.Clients
         public string HexKey()
         {
             var key = CryptoUtils.Keccak256(_data);
-            return BytesUtils.ToHexString(key, Prefix.ZeroLowerX);
+            return ByteUtils.ToHexString(key, Prefix.ZeroLowerX);
         }
     }
 }

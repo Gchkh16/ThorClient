@@ -20,12 +20,18 @@ namespace ThorClient.Clients
             {
                 throw new Exception("Genesis block id is invalid");
             }
-            var bytesId = BytesUtils.ToByteArray(hexId);
+            var bytesId = ByteUtils.ToByteArray(hexId);
             if (bytesId == null || bytesId.Length != 32)
             {
                 throw new Exception("Genesis block id converted error");
             }
             return bytesId[31];
+        }
+
+        public static BlockRef GetBlockRef(Revision revision)
+        {
+            var block = BlockClient.GetBlock(revision);
+            return block?.BlockRef();
         }
     }
 }

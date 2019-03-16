@@ -277,7 +277,7 @@ namespace ThorClient.Numerics
             }
 
             BigInteger numerator = significand;
-            BigInteger denominator = BigInteger.One;
+            var denominator = BigInteger.One;
 
             if (exponent > 0)
             {
@@ -304,7 +304,7 @@ namespace ThorClient.Numerics
         /// <param name="value"></param>
         public BigDecimal(decimal value)
         {
-            int[] bits = decimal.GetBits(value);
+            var bits = decimal.GetBits(value);
             if (bits == null || bits.Length != 4 || (bits[3] & ~(DecimalSignMask | DecimalScaleMask)) != 0 || (bits[3] & DecimalScaleMask) > (28 << 16))
             {
                 throw new ArgumentException("invalid Decimal", "value");
@@ -449,7 +449,7 @@ namespace ThorClient.Numerics
                 exponent = BigInteger.Negate(exponent);
             }
 
-            BigDecimal result = baseValue;
+            var result = baseValue;
             while (exponent > BigInteger.One)
             {
                 result = result * baseValue;
@@ -672,7 +672,7 @@ namespace ThorClient.Numerics
             //
             // Scale the numerator to preseve the fraction part through the integer division
             //
-            BigInteger denormalized = (value._bigIntValue * s_bnDoublePrecision) / factor;
+            var denormalized = (value._bigIntValue * s_bnDoublePrecision) / factor;
             if (denormalized.IsZero)
                 return (value.Sign < 0) ? BitConverter.Int64BitsToDouble(unchecked((long)0x8000000000000000)) : 0d; // underflow to -+0
 
@@ -720,7 +720,7 @@ namespace ThorClient.Numerics
             // 
             // Scale the numerator to preseve the fraction part through the integer division
             // 
-            BigInteger denormalized = (value._bigIntValue * s_bnDecimalPrecision) / factor;
+            var denormalized = (value._bigIntValue * s_bnDecimalPrecision) / factor;
             if (denormalized.IsZero)
             {
                 // 
@@ -736,7 +736,7 @@ namespace ThorClient.Numerics
                 }
                 else
                 {
-                    DecimalUInt32 dec = new DecimalUInt32();
+                    var dec = new DecimalUInt32();
                     dec.dec = (decimal)denormalized;
                     dec.flags = (dec.flags & ~DecimalScaleMask) | (scale << 16);
                     return dec.dec;

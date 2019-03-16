@@ -24,11 +24,11 @@ namespace ThorClient.Core.Model.Clients
             {
                 throw new ArgumentException("hex block id is invalid");
             }
-            var blockIdBytes = BytesUtils.ToByteArray(hexBlockId);
+            var blockIdBytes = ByteUtils.ToByteArray(hexBlockId);
             return new BlockRef(blockIdBytes);
         }
 
-        public override string ToString() => BytesUtils.ToHexString(_blockRef, Prefix.ZeroLowerX);
+        public override string ToString() => ByteUtils.ToHexString(_blockRef, Prefix.ZeroLowerX);
 
         public byte[] ToByteArray() => _blockRef;
     }

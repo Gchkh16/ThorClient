@@ -6,9 +6,9 @@ namespace ThorClient.Utils
 {
     public class RawTransactionFactory
     {
-        private static RawTransactionFactory INSTANCE = new RawTransactionFactory();
+        public static RawTransactionFactory Instance = new RawTransactionFactory();
 
-        public RawTransaction createRawTransaction(byte chainTag, byte[] blockRef, int expiration, int gasInt,
+        public RawTransaction CreateRawTransaction(byte chainTag, byte[] blockRef, int expiration, int gasInt,
             byte gasPriceCoef, byte[] nonce, params ToClause[] toClauses)
         {
             if (chainTag == 0 || blockRef == null || expiration <= 0 || gasInt< 21000 || gasPriceCoef< 0
@@ -21,19 +21,19 @@ namespace ThorClient.Utils
             builder.Update(chainTag, "chainTag");
 
             // Expiration
-            var expirationBytes = BytesUtils.LongToBytes(expiration);
+            var expirationBytes = ByteUtils.LongToBytes(expiration);
             builder.Update(expirationBytes, "expiration");
 
             // BlockRef
-            var currentBlockRef = BytesUtils.TrimLeadingZeroes(blockRef);
+            var currentBlockRef = ByteUtils.TrimLeadingZeroes(blockRef);
             builder.Update(currentBlockRef, "blockRef");
 
             // Nonce
-            var trimedNonce = BytesUtils.TrimLeadingZeroes(nonce);
+            var trimedNonce = ByteUtils.TrimLeadingZeroes(nonce);
             builder.Update(trimedNonce, "nonce");
 
             // gas
-            var gas = BytesUtils.LongToBytes(gasInt);
+            var gas = ByteUtils.LongToBytes(gasInt);
             builder.Update(gas, "gas");
             builder.Update(gasPriceCoef, "gasPriceCoef");
 

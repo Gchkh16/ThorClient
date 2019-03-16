@@ -5,6 +5,7 @@ using ThorClient.Core.Model.Clients.Base;
 using ThorClient.Core.Model.Exception;
 using ThorClient.Numerics;
 using ThorClient.Utils;
+using BigInteger = System.Numerics.BigInteger;
 
 namespace ThorClient.Core.Model.Clients
 {
@@ -58,8 +59,8 @@ namespace ThorClient.Core.Model.Clients
         public string ToHexString()
         {
             var fullDecimal = Value *  BigDecimal.Pow(10, (int)Token.Precision);
-            byte[] bytes = BytesUtils.TrimLeadingZeroes(fullDecimal.GetWholePart().ToByteArray());
-            return BytesUtils.ToHexString(bytes, Prefix.ZeroLowerX);
+            var bytes = ByteUtils.TrimLeadingZeroes(fullDecimal.GetWholePart().ToByteArray());
+            return ByteUtils.ToHexString(bytes, Prefix.ZeroLowerX);
         }
 
         public virtual byte[] ToByteArray()
@@ -70,8 +71,8 @@ namespace ThorClient.Core.Model.Clients
 
         public BigInteger ToBigInteger()
         {
-            BigDecimal fullDecimal = Value * (BigDecimal.Pow(10, (int)Token.Precision));
-            throw new NotImplementedException(); 
+            var fullDecimal = Value * (BigDecimal.Pow(10, (int)Token.Precision));
+            return fullDecimal.GetWholePart();
         }
 
         private class Zero : Amount

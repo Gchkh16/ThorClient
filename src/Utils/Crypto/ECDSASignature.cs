@@ -9,8 +9,8 @@ namespace ThorClient.Utils.Crypto
 
         public ECDSASignature(byte[] rBytes, byte[] sBytes)
         {
-            R = BytesUtils.BytesToBigInt(rBytes);
-            S = BytesUtils.BytesToBigInt(sBytes);
+            R = ByteUtils.BytesToBigInt(rBytes);
+            S = ByteUtils.BytesToBigInt(sBytes);
         }
 
         public ECDSASignature(BigInteger r, BigInteger s)

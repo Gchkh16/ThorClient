@@ -178,7 +178,7 @@ namespace ThorClient.Utils
             {
                 dest = value;
             }
-            return BytesUtils.ToHexString(dest, null);
+            return ByteUtils.ToHexString(dest, null);
         }
 
         private static string EncodeDynamicBytes(byte[] dynamicBytes)
@@ -200,7 +200,7 @@ namespace ThorClient.Utils
             {
                 rawValue[rawValue.Length - 1] = 1;
             }
-            return BytesUtils.ToHexString(rawValue, null);
+            return ByteUtils.ToHexString(rawValue, null);
         }
 
         private static string EncodeAddress(string address)
@@ -209,7 +209,7 @@ namespace ThorClient.Utils
             {
                 throw new InvalidArgumentException("Parameter format is not hex string");
             }
-            var paramBytes = BytesUtils.ToByteArray(address);
+            var paramBytes = ByteUtils.ToByteArray(address);
             if (paramBytes == null || paramBytes.Length > MAX_BYTE_LENGTH)
             {
                 throw new InvalidArgumentException("Parameter format is hex string size too large, or null");
@@ -218,11 +218,11 @@ namespace ThorClient.Utils
             {
                 var fillingZero = new byte[MAX_BYTE_LENGTH];
                 Array.Copy(paramBytes, 0, fillingZero, MAX_BYTE_LENGTH - paramBytes.Length, paramBytes.Length);
-                return BytesUtils.ToHexString(fillingZero, null);
+                return ByteUtils.ToHexString(fillingZero, null);
             }
             else
             {
-                return BytesUtils.CleanHexPrefix(address);
+                return ByteUtils.CleanHexPrefix(address);
             }
         }
 
@@ -240,7 +240,7 @@ namespace ThorClient.Utils
             }
 
             Array.Copy(rawValue, 0, paddedRawValue, MAX_BYTE_LENGTH - rawValue.Length, rawValue.Length);
-            return BytesUtils.ToHexString(paddedRawValue, null);
+            return ByteUtils.ToHexString(paddedRawValue, null);
         }
 
         private static byte GetPaddingValue(BigInteger numericType)

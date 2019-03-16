@@ -1,4 +1,5 @@
-﻿using ThorClient.Utils;
+﻿using ThorClient.Clients.Base;
+using ThorClient.Utils;
 
 namespace ThorClient.Core.Model.BlockChain
 {
@@ -10,5 +11,6 @@ namespace ThorClient.Core.Model.BlockChain
         public string WsProvider { get; set; }
         public int SocketTimeout { get; set; }
         public int ConnectTimeout { get; set; }
+
     }
 }

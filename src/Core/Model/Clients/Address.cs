@@ -45,11 +45,11 @@ namespace ThorClient.Core.Model.Clients
 
         private Address(string sanitizeHexAddress) => _sanitizeHexAddress = sanitizeHexAddress;
 
-        private Address(byte[] addressBytes) => _sanitizeHexAddress = BytesUtils.ToHexString(addressBytes, null);
+        private Address(byte[] addressBytes) => _sanitizeHexAddress = ByteUtils.ToHexString(addressBytes, null);
 
         private Address() {}
 
-        public byte[] ToByteArray() => BytesUtils.ToByteArray(_sanitizeHexAddress);
+        public byte[] ToByteArray() => ByteUtils.ToByteArray(_sanitizeHexAddress);
 
         public string ToHexString(Prefix prefix)
         {

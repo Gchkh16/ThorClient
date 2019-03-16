@@ -74,7 +74,7 @@ namespace ThorClient.Core.Model.Clients.Base
         public string GetHexMethodCodeNoPrefix()
         {
             var hashCode = GetBytesMethodHashed();
-            return BytesUtils.ToHexString(hashCode, null).Substring(0, 8);
+            return ByteUtils.ToHexString(hashCode, null).Substring(0, 8);
         }
 
         public byte[] GetBytesMethodHashed()

@@ -48,7 +48,8 @@ namespace ThorClient.Core.Model.Clients.Base
             }
             int index;
             var inputs = abiDefinition.Inputs;
-            if (inputs == null || parameters == null || inputs.Count != parameters.Length) {
+            if (inputs == null || parameters == null || inputs.Count != parameters.Length)
+            {
                 throw new InvalidArgumentException("Parameters length is not valid");
             }
             var dataBuffer = new StringBuilder();
@@ -57,18 +58,22 @@ namespace ThorClient.Core.Model.Clients.Base
             int dynamicDataOffset = ContractParamEncoder.GetLength(inputs, parameters) * 32;
             var dynamicData = new StringBuilder();
 
-            for (index = 0; index < parameters.Length; index++) {
+            for (index = 0; index < parameters.Length; index++)
+            {
                 var param = parameters[index];
                 string abiType = inputs[index].Type;
                 string code = ContractParamEncoder.Encode(abiType, param);
                 bool isDynamic = ContractParamEncoder.IsDynamic(index, param, abiType);
-                if (isDynamic) {
+                if (isDynamic)
+                {
                     string encodedDataOffset = ContractParamEncoder.EncodeNumeric(BigInteger.ValueOf(dynamicDataOffset),
                         true);
                     dataBuffer.Append(encodedDataOffset);
                     dynamicData.Append(code);
                     dynamicDataOffset += code.Length >> 1;
-                } else {
+                }
+                else
+                {
                     dataBuffer.Append(code);
                 }
             }
@@ -82,10 +87,13 @@ namespace ThorClient.Core.Model.Clients.Base
             try
             {
                 list = JsonConvert.DeserializeObject<List<AbiDefinition>>(abisString);
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 Debug.WriteLine(e.StackTrace);
             }
-            if (list == null) {
+            if (list == null)
+            {
                 return null;
             }
             return list;
@@ -145,6 +153,21 @@ namespace ThorClient.Core.Model.Clients.Base
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        /// build transaction clause
+        /// </summary>
+        /// <param name="toAddress"><seealso cref="Address"/> </param>
+        /// <param name="abiDefinition"><seealso cref="AbiDefinition"/> Abi definition. </param>
+        /// <param name="hexArguments"><seealso cref="String"/> </param>
+        /// <returns> <seealso cref="ToClause"/> </returns>
+        public static ToClause BuildToClause(Address toAddress, AbiDefinition abiDefinition, params object[] hexArguments)
+        {
+            ToData toData = new ToData();
+            String data = BuildData(abiDefinition, hexArguments);
+            toData.SetData(data);
+            return new ToClause(toAddress, Amount.ZERO, toData);
         }
     }
 }

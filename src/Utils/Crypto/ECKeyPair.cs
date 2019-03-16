@@ -34,7 +34,7 @@ namespace ThorClient.Utils.Crypto
 
         public static ECKeyPair Create(string privateKeyHex)
         {
-            var privKey = BytesUtils.ToByteArray(privateKeyHex);
+            var privKey = ByteUtils.ToByteArray(privateKeyHex);
             return Create(privKey);
         }
 
@@ -42,7 +42,7 @@ namespace ThorClient.Utils.Crypto
         {
             if (privateKey.Length == PRIVATE_KEY_SIZE)
             {
-                return Create(BytesUtils.BytesToBigInt(privateKey));
+                return Create(ByteUtils.BytesToBigInt(privateKey));
             }
             else
             {
@@ -68,9 +68,9 @@ namespace ThorClient.Utils.Crypto
             PublicKey = publicKey;
         }
 
-        public byte[] GetRawPrivateKey() => BytesUtils.ToBytesPadded(PrivateKey, PRIVATE_KEY_SIZE);
+        public byte[] GetRawPrivateKey() => ByteUtils.ToBytesPadded(PrivateKey, PRIVATE_KEY_SIZE);
 
-        public byte[] GetRawPublicKey() => BytesUtils.ToBytesPadded(PublicKey, PUBLIC_KEY_SIZE);
+        public byte[] GetRawPublicKey() => ByteUtils.ToBytesPadded(PublicKey, PUBLIC_KEY_SIZE);
 
         public byte[] GetRawAddress()
         {
@@ -83,7 +83,7 @@ namespace ThorClient.Utils.Crypto
         public string GetHexAddress()
         {
             var addressBytes = GetRawAddress();
-            return BytesUtils.ToHexString(addressBytes, Prefix.ZeroLowerX);
+            return ByteUtils.ToHexString(addressBytes, Prefix.ZeroLowerX);
         }
 
         /// <summary>

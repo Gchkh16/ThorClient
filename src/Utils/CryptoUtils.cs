@@ -37,8 +37,8 @@ namespace ThorClient.Utils
 
         public static byte[] GenerateTxNonce()
         {
-            SecureRandom random = new SecureRandom();
-            byte[] bytes = new byte[8];
+            var random = new SecureRandom();
+            var bytes = new byte[8];
             random.NextBytes(bytes);
             return bytes;
         }
@@ -70,7 +70,7 @@ namespace ThorClient.Utils
             */
             var blake2b = new Blake2bDigest(256);
             blake2b.BlockUpdate(message, 0, message.Length);
-            byte[] digest = new byte[32];
+            var digest = new byte[32];
             int size = blake2b.DoFinal(digest, 0);
             if (size > 0)
             {
@@ -91,7 +91,7 @@ namespace ThorClient.Utils
         {
             var sha256Digest = new Sha256Digest();
             sha256Digest.BlockUpdate(bytes, offset, size);
-            byte[] sha256 = new byte[32];
+            var sha256 = new byte[32];
             sha256Digest.DoFinal(sha256, 0);
             return sha256;
         }

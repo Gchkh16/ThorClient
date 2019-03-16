@@ -9,14 +9,10 @@ namespace ThorClient.Clients
         {
             var contractAddr = token.ContractAddress;
             var currRevision = revision ?? Revision.BEST;
-            AbiDefinition abiDefinition = ERC20Contract.DefaultERC20Contract.FindAbiDefinition("balanceOf");
+            var abiDefinition = ERC20Contract.DefaultERC20Contract.FindAbiDefinition("balanceOf");
             var call = AbstractContract.BuildCall(abiDefinition, address.ToHexString(null));
-            ContractCallResult contractCallResult = CallContract(call, contractAddr, currRevision);
-            if (contractCallResult == null)
-            {
-                return null;
-            }
-            return contractCallResult.GetBalance(token);
+            var contractCallResult = CallContract(call, contractAddr, currRevision);
+            return contractCallResult?.GetBalance(token);
         }
     }
 }

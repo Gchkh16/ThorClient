@@ -26,7 +26,7 @@ namespace ThorClient.Utils.Rlp
 
         public string AsString()
         {
-            return BytesUtils.ToHexString(Value, Prefix.ZeroLowerX);
+            return ByteUtils.ToHexString(Value, Prefix.ZeroLowerX);
         }
 
         public static RlpString Create(byte[] value) => new RlpString(value);

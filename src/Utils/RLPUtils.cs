@@ -134,7 +134,7 @@ namespace ThorClient.Utils
             {
                 return null;
             }
-            var rawTxBytes = BytesUtils.ToByteArray(hexRawTransaction);
+            var rawTxBytes = ByteUtils.ToByteArray(hexRawTransaction);
             var list = RlpDecoder.Decode(rawTxBytes);
             if (list == null)
             {
@@ -227,7 +227,7 @@ namespace ThorClient.Utils
         {
             for (int index = 0; index < clauseContent.Count; index++)
             {
-                RlpString clause = (RlpString)clauseContent[index];
+                var clause = (RlpString)clauseContent[index];
                 switch (index)
                 {
                     case To:

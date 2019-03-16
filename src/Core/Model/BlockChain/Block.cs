@@ -25,6 +25,6 @@ namespace ThorClient.Core.Model.BlockChain
 
         public override string ToString() => $"number:{Number}  block:{Id} parentId:{ParentId}";
 
-        public BlockRef CreateBlockRef() => BlockRef.Create(Id);
+        public BlockRef BlockRef() => Clients.BlockRef.Create(Id);
     }
 }

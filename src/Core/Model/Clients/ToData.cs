@@ -27,7 +27,7 @@ namespace ThorClient.Core.Model.Clients
         public virtual byte[] ToByteArray()
         {
 
-            return BytesUtils.ToByteArray(_hexString);
+            return ByteUtils.ToByteArray(_hexString);
         }
 
 

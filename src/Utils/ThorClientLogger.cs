@@ -130,7 +130,7 @@ namespace ThorClient.Utils
             {
                 return null;
             }
-            var rawTxBytes = BytesUtils.ToByteArray(hexRawTransaction);
+            var rawTxBytes = ByteUtils.ToByteArray(hexRawTransaction);
             var list = RlpDecoder.Decode(rawTxBytes);
             if (list == null)
             {

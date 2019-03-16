@@ -49,8 +49,8 @@ namespace ThorClient.Utils.Crypto
             }
 
             byte v = (byte)recId;
-            var r = BytesUtils.ToBytesPadded(sig.R, 32);
-            var s = BytesUtils.ToBytesPadded(sig.S, 32);
+            var r = ByteUtils.ToBytesPadded(sig.R, 32);
+            var s = ByteUtils.ToBytesPadded(sig.S, 32);
 
             return new SignatureData(v, r, s);
 

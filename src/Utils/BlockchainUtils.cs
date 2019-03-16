@@ -92,13 +92,13 @@ namespace ThorClient.Utils
         {
 
             // remove prefix 0x
-            address = BytesUtils.CleanHexPrefix(address);
+            address = ByteUtils.CleanHexPrefix(address);
             address = address.ToLower();
 
             // do keccak256 once
             var bytes = CryptoUtils.Keccak256(Encoding.UTF8.GetBytes(address));
             var builder = new StringBuilder();
-            var hex = BytesUtils.ToHexString(bytes, null);
+            var hex = ByteUtils.ToHexString(bytes, null);
 
             var chars = hex.ToCharArray();
             int size = address.Length;
@@ -135,13 +135,13 @@ namespace ThorClient.Utils
 
         public static BigDecimal Amount(string hexString, int precision, int scale)
         {
-            byte[] balBytes = BytesUtils.ToByteArray(hexString);
+            var balBytes = ByteUtils.ToByteArray(hexString);
             if (balBytes == null)
             {
                 return null;
             }
-            BigInteger balInteger = BytesUtils.BytesToBigInt(balBytes);
-            return BytesUtils.BigIntToBigDecimal(balInteger, precision, scale);
+            var balInteger = ByteUtils.BytesToBigInt(balBytes);
+            return ByteUtils.BigIntToBigDecimal(balInteger, precision, scale);
         }
 
         public static byte[] ByteArrayAmount(BigDecimal value, int precision)
@@ -154,9 +154,9 @@ namespace ThorClient.Utils
             {
                 throw new ArgumentNullException(nameof(precision),"precision is invalid");
             }
-            BigDecimal bigDecimal = value * BigDecimal.Pow(10, precision);
-            System.Numerics.BigInteger bigInt = bigDecimal.GetWholePart();
-            return BytesUtils.TrimLeadingZeroes(bigInt.ToByteArray());
+            var bigDecimal = value * BigDecimal.Pow(10, precision);
+            var bigInt = bigDecimal.GetWholePart();
+            return ByteUtils.TrimLeadingZeroes(bigInt.ToByteArray());
         }
     }
 }
