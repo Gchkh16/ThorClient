@@ -1,5 +1,7 @@
 ﻿using System;
 using ThorClient.Console;
+using ThorClient.Core.Model.BlockChain;
+using ThorClient.Utils;
 using static System.Console;
 
 namespace ThorClient
@@ -35,7 +37,7 @@ namespace ThorClient
         private const string BALANCE = "balance";
 
 
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
 
             try
@@ -118,9 +120,46 @@ namespace ThorClient
             }
         }
 
+        /// <summary>
+        /// Process console input arguments
+        /// </summary>
+        /// <param name="args">input arguments </param>
         private static string ProcessConsoleArguments(string[] args)
         {
-            throw new NotImplementedException();
+            string privateKey = null;
+            string nodeProviderUrl = null;
+            if (args[0].Equals(CHAIN_TAG) || args[0].Equals(BLOCK_REF) || args[0].Equals(GET_BLOCK) || args[0].Equals(SEND)
+                || args[0].Equals(SEND_RAW) || args[0].Equals(TRANSFER_VET) || args[0].Equals(TRANSFER_VTHO)
+                || args[0].Equals(BALANCE))
+            {
+
+                if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]) && args[1].StartsWith("http"))
+                {
+                    nodeProviderUrl = args[1];
+                }
+                if (string.IsNullOrWhiteSpace(nodeProviderUrl))
+                {
+                    WriteLine("You have input invalid parameters.");
+                    Environment.Exit(0);
+                }
+                if (args.Length > 2 && args[0].Equals(SEND))
+                {
+                    // args=send {providerUrl} {privateKey}
+                    if (!string.IsNullOrWhiteSpace(args[2]))
+                    {
+                        privateKey = args[2];
+                    }
+                    if (string.IsNullOrWhiteSpace(privateKey))
+                    {
+                        WriteLine("You have input invalid parameters.");
+                        Environment.Exit(0);
+                    }
+                }
+                NodeProvider nodeProvider = NodeProvider.Instance;
+                nodeProvider.Provider = nodeProviderUrl;
+                nodeProvider.SocketTimeout = 5000;
+            }
+            return privateKey;
         }
     }
 }

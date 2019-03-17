@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Linq;
+using Org.BouncyCastle.Asn1.X9;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Math.EC;
 using Org.BouncyCastle.Math.EC.Multiplier;
 using Org.BouncyCastle.Utilities;
+using Org.BouncyCastle.Utilities.Encoders;
+using static ThorClient.Utils.Assertions;
 
 namespace ThorClient.Utils.Crypto
 {
@@ -63,10 +66,53 @@ namespace ThorClient.Utils.Crypto
         /// <param name="sig">a signature object</param>
         /// <param name="message">message bytes array</param>
         /// <returns>public key</returns>
-        public static BigInteger RecoverFromSignature(int i, ECDSASignature sig, byte[] message)
+        public static BigInteger RecoverFromSignature(int recId, ECDSASignature sig, byte[] message)
         {
-            throw new NotImplementedException();
+            VerifyPrecondition(recId == 0 || recId == 1, "recId must be 0 or 1");
+            VerifyPrecondition(sig.R.SignValue >= 0, "r must be positive");
+            VerifyPrecondition(sig.S.SignValue >= 0, "s must be positive");
+            VerifyPrecondition(message != null, "message cannot be null");
+
+            var n = ECKeyPair.CURVE.N; // Curve order.
+            var i = BigInteger.ValueOf((long)recId / 2);
+            var x = sig.R.Add(i.Multiply(n));
+
+            var Prime = new BigInteger(1, Hex.Decode("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F"));
+            if (x.CompareTo(Prime) >= 0)
+            {
+
+                return null;
+            }
+
+            ECPoint R = DecompressKey(x, (recId & 1) == 1);
+
+            if (!R.Multiply(n).IsInfinity)
+            {
+                return null;
+            }
+
+            var e = new BigInteger(1, message);
+
+            var EInv = BigInteger.Zero.Subtract(e).Mod(n);
+            var RInv = sig.R.ModInverse(n);
+            var SrInv = RInv.Multiply(sig.S).Mod(n);
+            var EInvrInv = RInv.Multiply(EInv).Mod(n);
+            var q = ECAlgorithms.SumOfTwoMultiplies(ECKeyPair.CURVE.G, EInvrInv, R, SrInv);
+
+            var QBytes = q.GetEncoded(false);
+            // We remove the prefix
+            return new BigInteger(1, Arrays.CopyOfRange(QBytes, 1, QBytes.Length));
+
         }
+
+
+        public static ECPoint DecompressKey(BigInteger xBN, bool yBit)
+        {
+            byte[] compEnc = X9IntegerConverter.IntegerToBytes(xBN, 1 + X9IntegerConverter.GetByteLength(ECKeyPair.CURVE.Curve));
+            compEnc[0] = (byte)(yBit ? 0x03 : 0x02);
+            return ECKeyPair.CURVE.Curve.DecodePoint(compEnc);
+        }
+
 
         /// <summary>
         /// Returns public key from give private key
